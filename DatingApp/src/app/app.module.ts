@@ -2,8 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { JwtModule } from '@auth0/angular-jwt';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
-import { BsDropdownModule, TabsModule } from 'ngx-bootstrap';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BsDropdownModule, TabsModule, BsDatepickerModule } from 'ngx-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -53,9 +53,11 @@ import { PhotoEditorComponent } from './members/photo-editor/photo-editor.compon
       BrowserModule,
       HttpClientModule,
       FormsModule,
+      ReactiveFormsModule,
       CommonModule,
       BrowserAnimationsModule,
       BsDropdownModule.forRoot(),
+      BsDatepickerModule.forRoot(),
       ToastrModule.forRoot(),
       RouterModule.forRoot(appRouts),
       TabsModule.forRoot(),

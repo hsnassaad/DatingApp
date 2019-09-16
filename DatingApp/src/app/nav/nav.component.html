@@ -14,22 +14,22 @@
         <a class="nav-link" [routerLink]="['/messages']"  >Messages</a>
       </li>
     </ul>
-    
+
     <div class="dropdown" dropdown  *ngIf="loggedIn()">
-     
+
      <span>
-       <img class="mr-1" src="{{photoUrl}}" />
+       <img class="mr-1" src="{{photoUrl || '../../assets/user.png'}}" />
      </span>
       <a class="text-light dropdown-toggle" dropdownToggle  >
         Welcome {{authService.decodedToken?.unique_name | titlecase }}
       </a>
-      
+
       <div class="dropdown-menu mt-3" *dropdownMenu aria-labelledby="dropdownMenuLink">
         <a class="dropdown-item" [routerLink]="['/member/edit']"  ><i class="fa fa-user"></i> Edit Profile</a>
         <a class="dropdown-item" (click)="logOut()"><i class="fa fa-sign-out"></i> Logout</a>
       </div>
     </div>
-    
+
   </div>
     <form class="form-inline my-2 my-lg-0" *ngIf="!loggedIn()" #loginForm="ngForm" (ngSubmit)="login()">
       <input class="form-control mr-sm-2" type="text" name="userame" [(ngModel)]="model.username" required
