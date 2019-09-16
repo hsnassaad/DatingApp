@@ -28,7 +28,7 @@ namespace DatingApp_Api.Helpers
 
         public int MaxAge { get; set; } = 99;
 
-        public int OrderBy { get; set; }
+        public string OrderBy { get; set; }
 
 
 
