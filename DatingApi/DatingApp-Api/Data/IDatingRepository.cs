@@ -1,4 +1,5 @@
-﻿using DatingApp_Api.Models;
+﻿using DatingApp_Api.Helpers;
+using DatingApp_Api.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace DatingApp_Api.Data
         Task<bool> SaveAll();
         Task<User> GetUser(int id);
 
-        Task<IEnumerable<User>> GetUsers();
+        Task<PageList<User>> GetUsers(UserParams userParams);
 
         Task<Photo> GetPhoto(int id);
 

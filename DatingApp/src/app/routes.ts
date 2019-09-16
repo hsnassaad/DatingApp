@@ -9,17 +9,19 @@ import { MemberDetailResover } from './_resolvers/member-detail.resolver';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { MemberEditResover } from './_resolvers/member-edit.resolver';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
+import { MemberListResover } from './_resolvers/member-list.resolver';
 
 export const appRouts: Routes = [
 
     { path: '', component: HomeComponent },
+    { path: 'home', component: HomeComponent },
 
     {
         path: '',
         runGuardsAndResolvers: 'always',
         canActivate: [AuthGuard],
         children: [
-            { path: 'members', component: MemberListComponent },
+            { path: 'members', component: MemberListComponent, resolve: {users: MemberListResover} },
             { path: 'members/:id', component: MemberDetailsComponent,
             resolve: { user: MemberDetailResover } },
             { path: 'member/edit', component: MemberEditComponent,

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { JwtModule } from '@auth0/angular-jwt';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BsDropdownModule, TabsModule, BsDatepickerModule } from 'ngx-bootstrap';
+import { BsDropdownModule, TabsModule, BsDatepickerModule, PaginationModule  } from 'ngx-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -34,6 +34,7 @@ import { MemberEditComponent } from './members/member-edit/member-edit.component
 import { MemberEditResover } from './_resolvers/member-edit.resolver';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
+import { MemberListResover } from './_resolvers/member-list.resolver';
 
 
 @NgModule({
@@ -60,6 +61,7 @@ import { PhotoEditorComponent } from './members/photo-editor/photo-editor.compon
       BrowserAnimationsModule,
       BsDropdownModule.forRoot(),
       BsDatepickerModule.forRoot(),
+      PaginationModule.forRoot(),
       ToastrModule.forRoot(),
       RouterModule.forRoot(appRouts),
       TabsModule.forRoot(),
@@ -83,6 +85,7 @@ import { PhotoEditorComponent } from './members/photo-editor/photo-editor.compon
       AuthGuard,
       MemberDetailResover,
       MemberEditResover,
+      MemberListResover,
       PreventUnsavedChanges,
    ],
    bootstrap: [

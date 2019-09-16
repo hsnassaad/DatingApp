@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DatingApp_Api.Helpers;
 using DatingApp_Api.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -51,9 +52,22 @@ namespace DatingApp_Api.Data
 
         }
 
-        public async Task<IEnumerable<User>> GetUsers()
+        public async Task<PageList<User>> GetUsers(UserParams userParams)
         {
-            return await _context.Users.Include(p => p.Photos).ToListAsync();
+            var users = _context.Users.Include(p => p.Photos).AsQueryable();
+
+            users = users.Where(u => u.Id != userParams.userId).Where(g => g.Gender == userParams.Gender);
+
+            if (userParams.MinAge != 18 || userParams.MaxAge != 99)
+            {
+                var minDob = DateTime.Today.AddYears(-userParams.MaxAge - 1);
+                var maxDob = DateTime.Today.AddYears(-userParams.MinAge);
+
+                users = users.Where(u => u.DateOfBirth >= minDob && u.DateOfBirth <= maxDob);
+            }
+
+
+            return await PageList<User>.CreateAsync(users, userParams.PageNumber, userParams.PageSize);
         }
 
         public async Task<bool> SaveAll()
