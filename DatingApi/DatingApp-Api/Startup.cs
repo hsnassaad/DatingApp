@@ -53,7 +53,7 @@ namespace DatingApp_Api
 
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IDatingRepository, DatingRepository>();
-
+            services.AddScoped<LogUserActivity>();
 
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
 

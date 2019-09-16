@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { NgxGalleryModule } from 'ngx-gallery';
 import { FileUploadModule } from 'ng2-file-upload';
+import {TimeAgoPipe} from 'time-ago-pipe';
 import 'hammerjs';
 
 
@@ -48,6 +49,7 @@ import { PhotoEditorComponent } from './members/photo-editor/photo-editor.compon
       MemberDetailsComponent,
       MemberEditComponent,
       PhotoEditorComponent,
+      TimeAgoPipe,
    ],
    imports: [
       BrowserModule,
