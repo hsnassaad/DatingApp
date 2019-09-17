@@ -23,7 +23,7 @@ export class PhotoEditorComponent implements OnInit {
   currentMain: Photo;
 
   constructor(private authService: AuthService, private userService: UserService, private toaster: ToastrService,
-    private alertify: AlertifyService) { }
+              private alertify: AlertifyService) { }
 
   ngOnInit() {
     this.initializeUploader();
@@ -59,7 +59,7 @@ export class PhotoEditorComponent implements OnInit {
         };
         this.photos.push(photo);
 
-        if(res.isMain) {
+        if (res.isMain) {
           this.authService.changeMemberPhoto(photo.url);
           this.authService.currentUser.photoUrl = photo.url;
           localStorage.setItem('user', JSON.stringify(this.authService.currentUser));
@@ -88,7 +88,7 @@ export class PhotoEditorComponent implements OnInit {
         this.photos.splice(this.photos.findIndex(p => p.id === id), 1);
         this.toaster.success('Photo deleted successfully');
       }, error => {
-        this.toaster.error('failed to delete this photo');
+        this.toaster.error('Failed to delete this photo');
       });
 
     });

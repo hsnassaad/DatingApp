@@ -18,23 +18,25 @@ export class MemberEditComponent implements OnInit {
 
   @ViewChild('editForm', { static: false }) editForm: NgForm;
   @HostListener('window: beforeunload', ['$event'])
+
   unloadNotification($event: any) {
     if (this.editForm.dirty) {
       $event.returnValue = true;
     }
   }
 
-
   constructor(private route: ActivatedRoute, private toaster: ToastrService, private authService: AuthService,
               private userService: UserService) { }
-  ngOnInit() {
-    this.route.data.subscribe(data => {
-      this.user = data.user;
-    });
 
-    this.authService.currentPhotoUrl.subscribe(photoUrl => this.photoUrl = photoUrl);
+    ngOnInit() {
+      this.route.data.subscribe(data => {
+        this.user = data.user;
+      });
 
-  }
+      this.authService.currentPhotoUrl.subscribe(photoUrl => this.photoUrl = photoUrl);
+
+    }
+
 
   updateUser() {
     this.userService.updateUser(this.authService.decodedToken.nameid, this.user).subscribe(next => {
