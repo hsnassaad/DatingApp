@@ -34,8 +34,10 @@ import { MemberEditComponent } from './members/member-edit/member-edit.component
 import { MemberEditResover } from './_resolvers/member-edit.resolver';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
+import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
 import { MemberListResover } from './_resolvers/member-list.resolver';
 import { ListResover } from './_resolvers/list.resolver';
+import { MessagesResover } from './_resolvers/messages.resolver';
 
 
 @NgModule({
@@ -52,6 +54,7 @@ import { ListResover } from './_resolvers/list.resolver';
       MemberEditComponent,
       PhotoEditorComponent,
       TimeAgoPipe,
+      MemberMessagesComponent
    ],
    imports: [
       BrowserModule,
@@ -89,6 +92,7 @@ import { ListResover } from './_resolvers/list.resolver';
       MemberEditResover,
       MemberListResover,
       ListResover,
+      MessagesResover,
       PreventUnsavedChanges,
    ],
    bootstrap: [

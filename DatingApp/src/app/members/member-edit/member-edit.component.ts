@@ -16,7 +16,7 @@ export class MemberEditComponent implements OnInit {
   user: User;
   photoUrl: string;
 
-  @ViewChild('editForm', { static: false }) editForm: NgForm;
+  @ViewChild('editForm', { static: true }) editForm: NgForm;
   @HostListener('window: beforeunload', ['$event'])
 
   unloadNotification($event: any) {

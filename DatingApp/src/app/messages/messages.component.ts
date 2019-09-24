@@ -1,4 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { Message } from '../Model/Message';
+import { Pagination } from '../Model/pagination';
+import { UserService } from '../_services/user.service';
+import { AuthService } from '../_services/Auth.service';
+import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { PaginationResult } from '../Model/PaginationResult';
+import { AlertifyService } from '../_services/alertify.service';
 
 @Component({
   selector: 'app-messages',
@@ -7,9 +15,37 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MessagesComponent implements OnInit {
 
-  constructor() { }
+  messages: Message[];
+  pagination: Pagination;
+  messageContainer = 'Unread';
+
+  constructor(private userService: UserService, private authService: AuthService, private router: ActivatedRoute,
+    private toast: ToastrService, private alertService: AlertifyService) { }
 
   ngOnInit() {
+    this.router.data.subscribe(data => {
+      this.messages = data.messages.result;
+      this.pagination = data.messages.pagination;
+    });
+  }
+
+  loadMessages() {
+    this.userService.getMessages(this.authService.decodedToken.nameid, this.pagination.currentPage, this.pagination.itemsPerPage,
+      this.messageContainer).subscribe((res: PaginationResult<Message[]>) => {
+        this.messages = res.result;
+        this.pagination = res.pagination;
+      }, error => {
+        this.toast.error(error);
+      });
+  }
+
+  deleteMessage(id: number) {
+    
+  }
+
+  pageChanged(event: any): void {
+    this.pagination.currentPage = event.page;
+    this.loadMessages();
   }
 
 }

@@ -100,17 +100,8 @@ namespace DatingApp_Api.Data
             }
 
 
-            //if (!string.IsNullOrEmpty(userParams.Gender))
-            //{
-
-            //}
-
-
             return await PageList<User>.CreateAsync(users, userParams.PageNumber, userParams.PageSize);
         }
-
-
-
 
 
         private async Task<IEnumerable<int>> GetUsersLikes(int id, bool likers)
@@ -130,17 +121,55 @@ namespace DatingApp_Api.Data
         }
 
 
-
-
-
-
-
-
-
-
         public async Task<bool> SaveAll()
         {
             return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<Message> GetMessage(int id)
+        {
+            return  _context.Messages
+                .Include(u=>u.Sender).ThenInclude(p=>p.Photos)
+                .Include(u=>u.Recipient).ThenInclude(p=>p.Photos)
+                .FirstOrDefault(m => m.Id == id);
+        }
+
+        public async Task<PageList<Message>> GetMessagesForUser(MessageParams messageParams)
+        {
+            var messages = _context.Messages
+                .Include(u => u.Sender).ThenInclude(p => p.Photos)
+                .Include(u => u.Recipient).ThenInclude(p => p.Photos).AsQueryable();
+
+
+            switch (messageParams.MessageContainer)
+            {
+                case "Inbox":
+                    messages = messages.Where(u => u.RecipientId == messageParams.UserId && u.RecipientDeleted == false);
+                    break;
+
+                case "Outbox":
+                    messages = messages.Where(u => u.SenderId == messageParams.UserId && u.SenderDeleted == false);
+                    break;
+
+                default:
+                    messages = messages.Where(u => u.RecipientId == messageParams.UserId && u.IsRead == false);
+                    break;
+            }
+
+
+            messages = messages.OrderByDescending(d=>d.MessageSent);
+
+            return await PageList<Message>.CreateAsync(messages, messageParams.PageNumber, messageParams.PageSize);
+        }
+
+        public async Task<IEnumerable<Message>> GetMessageThread(int userId, int recipientId)
+        {
+            return  await _context.Messages
+                 .Include(u => u.Sender).ThenInclude(p => p.Photos)
+                 .Include(u => u.Recipient).ThenInclude(p => p.Photos)
+                 .Where(m=>m.RecipientId == userId && m.RecipientDeleted == false && m.SenderId == recipientId
+                 || m.RecipientId == recipientId && m.SenderId == userId && m.SenderDeleted == false).OrderByDescending(m=>m.MessageSent).ToListAsync();
+
         }
     }
 }
