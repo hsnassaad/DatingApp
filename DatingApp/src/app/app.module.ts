@@ -3,14 +3,14 @@ import { NgModule } from '@angular/core';
 import { JwtModule } from '@auth0/angular-jwt';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BsDropdownModule, TabsModule, BsDatepickerModule, PaginationModule, ButtonsModule   } from 'ngx-bootstrap';
+import { BsDropdownModule, TabsModule, BsDatepickerModule, PaginationModule, ButtonsModule } from 'ngx-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { NgxGalleryModule } from 'ngx-gallery';
 import { FileUploadModule } from 'ng2-file-upload';
-import {TimeAgoPipe} from 'time-ago-pipe';
+import { TimeAgoPipe } from 'time-ago-pipe';
 import 'hammerjs';
 
 
@@ -39,64 +39,67 @@ import { MemberListResover } from './_resolvers/member-list.resolver';
 import { ListResover } from './_resolvers/list.resolver';
 import { MessagesResover } from './_resolvers/messages.resolver';
 
+export function tokenGetter() {
+  return localStorage.getItem('token');
+}
+
 
 @NgModule({
-   declarations: [
-      AppComponent,
-      NavComponent,
-      HomeComponent,
-      RegisterComponent,
-      MemberListComponent,
-      MemberCardComponent,
-      ListComponent,
-      MessagesComponent,
-      MemberDetailsComponent,
-      MemberEditComponent,
-      PhotoEditorComponent,
-      TimeAgoPipe,
-      MemberMessagesComponent
-   ],
-   imports: [
-      BrowserModule,
-      HttpClientModule,
-      FormsModule,
-      ReactiveFormsModule,
-      CommonModule,
-      BrowserAnimationsModule,
-      BsDropdownModule.forRoot(),
-      BsDatepickerModule.forRoot(),
-      PaginationModule.forRoot(),
-      ButtonsModule.forRoot(),
-      ToastrModule.forRoot(),
-      RouterModule.forRoot(appRouts),
-      TabsModule.forRoot(),
-      NgxGalleryModule,
-      FileUploadModule,
-      JwtModule.forRoot({
-         config: {
-            whitelistedDomains: ['localhost:44365'],
-            blacklistedRoutes: ['localhost:44365/api/auth'],
-            tokenGetter: () => {
-               return localStorage.getItem('token');
-            }
-         }
-      }),
-   ],
-   providers: [
-      AuthService,
-      AlertifyService,
-      ErrorInterceptorProvider,
-      UserService,
-      AuthGuard,
-      MemberDetailResover,
-      MemberEditResover,
-      MemberListResover,
-      ListResover,
-      MessagesResover,
-      PreventUnsavedChanges,
-   ],
-   bootstrap: [
-      AppComponent
-   ]
+  declarations: [
+    AppComponent,
+    NavComponent,
+    HomeComponent,
+    RegisterComponent,
+    MemberListComponent,
+    MemberCardComponent,
+    ListComponent,
+    MessagesComponent,
+    MemberDetailsComponent,
+    MemberEditComponent,
+    PhotoEditorComponent,
+    TimeAgoPipe,
+    MemberMessagesComponent
+  ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule,
+    BrowserAnimationsModule,
+    BsDropdownModule.forRoot(),
+    BsDatepickerModule.forRoot(),
+    PaginationModule.forRoot(),
+    ButtonsModule.forRoot(),
+    ToastrModule.forRoot(),
+    RouterModule.forRoot(appRouts),
+    TabsModule.forRoot(),
+    NgxGalleryModule,
+    FileUploadModule,
+    JwtModule.forRoot({
+      config: {
+        // tslint:disable-next-line: object-literal-shorthand
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ['localhost:5001'],
+        blacklistedRoutes: ['localhost:5001/api/auth'],
+      }
+    }),
+  ],
+  providers: [
+    AuthService,
+    AlertifyService,
+    ErrorInterceptorProvider,
+    UserService,
+    AuthGuard,
+    MemberDetailResover,
+    MemberEditResover,
+    MemberListResover,
+    ListResover,
+    MessagesResover,
+    PreventUnsavedChanges,
+  ],
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }

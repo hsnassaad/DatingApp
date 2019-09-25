@@ -32,13 +32,36 @@ namespace DatingApp_Api
 
         public IConfiguration Configuration { get; }
 
+
+        public void ConfigureDevelopmentServices(IServiceCollection services)
+        {
+            services.AddDbContext<DataContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection")));
+
+
+            ConfigureServices(services);
+        }
+
+
+        //public void ConfigureProductionServices(IServiceCollection services)
+        //{
+        //    services.AddDbContext<DataContext>(options =>
+        //        options.UseMySql(
+        //            Configuration.GetConnectionString("DefaultConnection")));
+
+
+        //    ConfigureServices(services);
+        //}
+
+
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DataContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-
 
             services.AddCors();
 
@@ -107,7 +130,15 @@ namespace DatingApp_Api
             // app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-            app.UseMvc();
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+            app.UseMvc(routes => {
+
+                routes.MapSpaFallbackRoute(
+                    name: "spa-fallback",
+                    defaults: new { controller = "FallBack", action = "Index" }
+                    );
+            });
         }
     }
 }
