@@ -132,7 +132,10 @@ export class UserService {
 
 
   deleteMessage(id: number, userId: number) {
-    return this.http.post(this.baseUrl + 'users/' + id + '/message/' + userId, {});
+    return this.http.post(this.baseUrl + 'users/' + userId + '/message/' + id , {});
   }
 
+  markAsRead(userId: number, messageId: number){
+    this.http.post(this.baseUrl + 'users/' + userId + '/message/' + messageId + '/read', {}).subscribe();
+  }
 }

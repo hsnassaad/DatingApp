@@ -3,6 +3,7 @@ import { Message } from 'src/app/Model/Message';
 import { UserService } from 'src/app/_services/user.service';
 import { AuthService } from 'src/app/_services/Auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-member-messages',
@@ -23,11 +24,24 @@ export class MemberMessagesComponent implements OnInit {
   }
 
   loadMessages() {
-    this.userService.getMessageThread(this.authService.decodedToken.nameid, this.recipientId).subscribe(messages => {
-      this.messages = messages;
-    }, error => {
-      this.toast.error(error);
-    });
+    const currentUserId = +this.authService.decodedToken.nameid;
+    this.userService.getMessageThread(this.authService.decodedToken.nameid, this.recipientId)
+      .pipe(
+        tap(messages => {
+          // tslint:disable-next-line: prefer-for-of
+          for (let index = 0; index < messages.length; index++) {
+            if (messages[index].isRead === false && messages[index].recipientId === currentUserId) {
+              this.userService.markAsRead(currentUserId, messages[index].id);
+            }
+
+          }
+        })
+      )
+      .subscribe(messages => {
+        this.messages = messages;
+      }, error => {
+        this.toast.error(error);
+      });
   }
 
 
