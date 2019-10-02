@@ -1,0 +1,8 @@
+IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'TestSP')
+DROP PROCEDURE TestSP
+GO
+
+CREATE PROCEDURE TestSP
+AS
+SELECT GETDATE() AS MyDate
+GO

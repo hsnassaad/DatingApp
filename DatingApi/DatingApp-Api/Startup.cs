@@ -70,8 +70,6 @@ namespace DatingApp_Api
                });
 
 
-
-
             services.AddCors();
 
             var mappingConfig = new MapperConfiguration(mc =>
