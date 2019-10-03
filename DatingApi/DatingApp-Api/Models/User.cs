@@ -26,6 +26,7 @@ namespace DatingApp_Api.Models
 
         public string City { get; set; }
 
+        public string PhotoUrl { get; set; }
 
         public string Country { get; set; }
 

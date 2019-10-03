@@ -30,8 +30,9 @@ namespace DatingApp_Api
 
                     var context = services.GetRequiredService<DataContext>();
                     var userManager= services.GetRequiredService<UserManager<User>>();
+                    var roleManager = services.GetRequiredService<RoleManager<Role>>();
                     context.Database.Migrate();
-                    Seeder.SeedUsers(userManager); 
+                    Seeder.SeedUsers(userManager, roleManager); 
 
                 }
                 catch (Exception ex)

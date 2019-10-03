@@ -80,8 +80,8 @@ export function tokenGetter() {
       config: {
         // tslint:disable-next-line: object-literal-shorthand
         tokenGetter: tokenGetter,
-        whitelistedDomains: ['localhost:5001'],
-        blacklistedRoutes: ['localhost:5001/api/auth'],
+        whitelistedDomains: ['localhost:5000'],
+        blacklistedRoutes: ['localhost:5000/api/auth'],
       }
     }),
   ],
