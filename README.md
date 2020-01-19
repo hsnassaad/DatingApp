@@ -12,6 +12,8 @@ The user can like other users, start a chat with them, see others profiles, filt
 
 - Asp .Net Core 2.2 For the Back End.
 - Angular 8 For Front End.
+- Bootstrap
+- ngx-bootstrap
 
 # Why?
 
